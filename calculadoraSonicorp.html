@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonicorp</title>
+</head>
+
+<body style="font-family: Arial, Helvetica, sans-serif;">
+    <center>
+        <h1>Sonicorp - Calculadora Financeira</h1>
+        <br><br>
+        <label style="font-size: 18px;">
+            Digite a quantidade média de vezes que as esteiras da sua produção sofreram paradas não planejada devido ao mau alinhamento no transporte de produtos no último mês:
+            <br><br>
+            <input type="number" id="iptDesvio" placeholder="Valor de Desvios" style="width: 200px;">
+        </label>
+        <br><br><br>
+        <label style="font-size: 18px;">
+            Digite o tempo médio necessário para solucionar cada um destes problemas ocorridos no último mês:
+            <br><br>
+            <input type="number" id="iptTempo" placeholder="Valor de Tempo" style="width: 200px;">
+        </label>
+        <br><br>
+        <button onclick="calcular()">Calcular</button>
+        <br><br>
+        <div id="divMensagem"></div>
+    </center>
+</body>
+
+</html>
+<script>
+    function calcular() {
+        var desvio = Number(iptDesvio.value);
+        var tempo = Number(iptTempo.value);
+        var total = desvio * 10000 * tempo;
+
+        if ((desvio <= 0) || (tempo <= 0)){
+            divMensagem.innerHTML = `Por favor, digite valores válidos`;            
+        }else{
+            divMensagem.innerHTML = `O total médio gasto, em reais, que poderia ter sido evitado com o uso de nossa tecnologia foi de R$${total},00`
+        }
+    }
+</script>
