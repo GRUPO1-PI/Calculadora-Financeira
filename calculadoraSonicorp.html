@@ -45,7 +45,7 @@
             <br><br>
             <h2>Orçamento</h2>
             <br>
-            <span class="texto">Informe quantos metros de esteira possui cada setor de sua produção <br> Caso não possua algum desses setores, deixe o campo vazio</span>
+            <span class="texto">Informe quantos metros de esteira possui cada setor de sua produção <br> Caso não possua algum desses setores, não preencha o campo correspondente</span>
             
             <div class="boxes">
                 <div class="box setor1">
@@ -174,9 +174,15 @@
             }
             divMensagem2.innerHTML = `Com um total de ${totalMetros} metros de esteira, você irá precisar de aproximadamente ${totalSensor.toFixed()} pares de sensor, que custará aproximados R$${totalValorSensor}`
 
-            var valorEconomizado = totalPerda - totalValorSensor; 
+            // Mensagem final
+            var valorEconomizado = totalPerda - totalValorSensor;
 
-            divMensagemFinal.innerHTML = `Com o nosso serviço de custo R$${totalValorSensor}, o lucro mensal de sua empresa aumentaria em R$${valorEconomizado}, ou seja, ${( valorEconomizado / totalPerda * 100).toFixed(2)}% do que você perdia anteriormente`;
+            if (desvio > 0 && tempo > 0){
+                divMensagemFinal.innerHTML = `Com o nosso serviço de custo R$${totalValorSensor}, o lucro mensal de sua empresa aumentaria em R$${valorEconomizado}, ou seja, ${( valorEconomizado / totalPerda * 100).toFixed(2)}% do que você perdia anteriormente`;
+            }else {
+                divMensagemFinal.innerHTML = `Valor não inserido, preencha todos os campos necessários`;
+            }
+
 
         }
     }
