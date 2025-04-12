@@ -35,13 +35,13 @@
                         <option value="g">Grande</option>
                     </select>
                 </label>
-                <br><br><br>
-                <button onclick="calcular()">Calcular</button>
                 <br><br>
                 <div id="divMensagem1"></div>
             </div>
             <br><br>
+
             <hr>
+
             <br><br>
             <h2>Orçamento</h2>
             <br>
@@ -53,44 +53,58 @@
                         <span class="titulo-sensor">Seleção de Matéria Prima</span>
                         <input type="number" id="iptSetor1">
                     </label>
+                    <div id="divMensagemMateria"></div>
                 </div>
                 <div class=" box setor2">
                     <label>
                         <span class="titulo-sensor">Higienização</span>
                         <input type="number" id="iptSetor2">
                     </label>
+                    <div id="divMensagemHigienizacao"></div>
                 </div>
                 <div id="box setor3">
                     <label>
                         <span class="titulo-sensor">Processamento</span>
                         <input type="number" id="iptSetor3">
                     </label>
+                    <div id="divMensagemProcessamento"></div>
                 </div>
                 <div id="box setor4">
                     <label>
                         <span class="titulo-sensor">Embalagem</span>
                         <input type="number" id="iptSetor4">
                     </label>
+                    <div id="divMensagemEmbalagem"></div>
                 </div>
                 <div class="box setor5">
                     <label>
                         <span class="titulo-sensor">Armazenamento</span>
                         <input type="number" id="iptSetor5">
                     </label>
+                    <div id="divMensagemArmazenamento"></div>
                 </div>
                 <div class="box setor6">
                     <label>
                         <span class="titulo-sensor">Distribuição</span>
                         <input type="number" id="iptSetor6">
                     </label>
+                    <div id="divMensagemDistribuicao"></div>
                 </div>
             </div>
-            <br><br>
-            <button onclick="calcularOrcamento()">Calcular Orçamento</button>
             <br><br>
             <div id="divMensagem"></div>
         </div>
         <div id="divMensagem2"></div>
+        <br><br>
+        <hr>
+        <br><br>
+        <div>
+            <b>Após preencher todos os campos necessários, pressione o botão para obter os resultados</b>
+            <br><br><br>
+            <button onclick="calcular()">Calcular</button>
+            <br><br><br>
+            <div id="divMensagemFinal"></div>
+        </div>
     </center>
 </body>
 
@@ -98,17 +112,19 @@
 <script>
     var precoSensor = 200;
     function calcular() {
+
+        // Perda
         var desvio = Number(iptDesvio.value);
         var tempo = Number(iptTempo.value);
         var porte = slcPorte.value;
-        var total = 0;
+        var totalPerda = 0;
 
         if (porte == 'p'){
-            total = desvio * 23467 * tempo;
+            totalPerda = desvio * 23467 * tempo;
         }else if (porte == 'm'){
-            total = desvio * 41067 * tempo;
+            totalPerda = desvio * 41067 * tempo;
         }else {
-            total = desvio * 88002 * tempo;
+            totalPerda = desvio * 88002 * tempo;
         }
 
 
@@ -118,10 +134,11 @@
         }else if ((desvio == 0) || (tempo == 0)){
             divMensagem1.innerHTML = `Todos os campos devem ser preenchidos`;
         } else {
-            divMensagem1.innerHTML = `O total médio gasto, em reais, que poderia ter sido evitado com o uso de nossa tecnologia foi de R$${total},00 <br>`
+            divMensagem1.innerHTML = `O total médio gasto, em reais, que poderia ter sido evitado com o uso de nossa tecnologia foi de R$${totalPerda},00 <br>`
         }
-    }
-    function calcularOrcamento() {
+
+        // Orçamento
+
         var setor1 = Number(iptSetor1.value);
         var setor2 = Number(iptSetor2.value);
         var setor3 = Number(iptSetor3.value);
@@ -134,13 +151,34 @@
         } else {
 
             var totalMetros = setor1 + setor2 + setor3 + setor4 + setor5 + setor6;
-            var totalSensores = totalMetros / 2;
-            var valorTotal = totalSensores.toFixed() * precoSensor;
+            var totalSensor = totalMetros / 4;
+            var totalValorSensor = totalSensor.toFixed() * precoSensor;
 
-            divMensagem2.innerHTML = `Com um total de ${totalMetros} metros de esteira, você irá precisar de aproximadamente ${totalSensores.toFixed()} pares de sensor, que custará aproximados R$${valorTotal}`
+            if (setor1 > 0){
+                divMensagemMateria.innerHTML = `Este setor precisará de ${(setor1 / 2).toFixed()} unidades de sensor`;
+            }
+            if (setor2 > 0){
+                divMensagemHigienizacao.innerHTML = `Este setor precisará de ${(setor2 / 2).toFixed()} unidades de sensor`;
+            }
+            if (setor3 > 0){
+                divMensagemProcessamento.innerHTML = `Este setor precisará de ${(setor3 / 2).toFixed()} unidades de sensor`;
+            }
+            if (setor4 > 0){
+                divMensagemProcessamento.innerHTML = `Este setor precisará de ${(setor4 / 2).toFixed()} unidades de sensor`;
+            }
+            if (setor5 > 0){
+                divMensagemEmbalagem.innerHTML = `Este setor precisará de ${(setor5 / 2).toFixed()} unidades de sensor`;
+            }
+            if (setor6 > 0){
+                divMensagemArmazenamento.innerHTML = `Este setor precisará de ${(setor6 / 2).toFixed()} unidades de sensor`;
+            }
+            divMensagem2.innerHTML = `Com um total de ${totalMetros} metros de esteira, você irá precisar de aproximadamente ${totalSensor.toFixed()} pares de sensor, que custará aproximados R$${totalValorSensor}`
 
+            var valorEconomizado = totalPerda - totalValorSensor; 
+
+            divMensagemFinal.innerHTML = `Com o nosso serviço de custo R$${totalValorSensor}, o lucro mensal de sua empresa aumentaria em R$${valorEconomizado}, ou seja, ${( valorEconomizado / totalPerda * 100).toFixed(2)}% do que você perdia anteriormente`;
 
         }
-
     }
+
 </script>
