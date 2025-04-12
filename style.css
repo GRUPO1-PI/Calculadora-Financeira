@@ -1,0 +1,19 @@
+
+.texto {
+    font-size: 18px;
+}
+
+.boxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.boxes input{
+    display: flex;
+}
+
+.titulo-sensor {
+    font-weight: bold;
+}
