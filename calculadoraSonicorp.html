@@ -22,7 +22,7 @@
                 </label>
                 <br><br><br>
                 <label style="font-size: 18px;">
-                    <span class="texto">Digite o tempo médio necessário para solucionar cada um destes problemas ocorridos no último mês:</span>
+                    <span class="texto">Digite o tempo médio (em minutos) necessário para solucionar cada um destes problemas ocorridos no último mês:</span>
                     <br><br>
                     <input type="number" id="iptTempo" placeholder="Valor de Tempo" style="width: 200px;">
                 </label>
@@ -106,6 +106,7 @@
             <div id="divMensagemFinal"></div>
         </div>
     </center>
+   
 </body>
 
 </html>
@@ -115,16 +116,16 @@
 
         // Perda
         var desvio = Number(iptDesvio.value);
-        var tempo = Number(iptTempo.value);
+        var tempo = (Number(iptTempo.value) / 60).toFixed(2);
         var porte = slcPorte.value;
         var totalPerda = 0;
 
         if (porte == 'p'){
-            totalPerda = desvio * 23467 * tempo;
+            totalPerda = desvio * 10000 * tempo;
         }else if (porte == 'm'){
-            totalPerda = desvio * 41067 * tempo;
+            totalPerda = desvio * 30000 * tempo;
         }else {
-            totalPerda = desvio * 88002 * tempo;
+            totalPerda = desvio * 50000 * tempo;
         }
 
 
@@ -134,7 +135,7 @@
         }else if ((desvio == 0) || (tempo == 0)){
             divMensagem1.innerHTML = `Todos os campos devem ser preenchidos`;
         } else {
-            divMensagem1.innerHTML = `O total médio gasto, em reais, que poderia ter sido evitado com o uso de nossa tecnologia foi de R$${totalPerda},00 <br>`
+            divMensagem1.innerHTML = `<b>O total médio gasto, em reais, que poderia ter sido evitado com o uso de nossa tecnologia foi de  <span style="color: rgb(255, 0, 0);">R$${totalPerda.toFixed(2)}</span>.</b> <br>`
         }
 
         // Orçamento
@@ -155,30 +156,30 @@
             var totalValorSensor = totalSensor.toFixed() * precoSensor;
 
             if (setor1 > 0){
-                divMensagemMateria.innerHTML = `Este setor precisará de ${(setor1 / 2).toFixed()} unidades de sensor`;
+                divMensagemMateria.innerHTML = `<b>Este setor precisará de ${(setor1 / 4).toFixed()} pares de sensor</b>`;
             }
             if (setor2 > 0){
-                divMensagemHigienizacao.innerHTML = `Este setor precisará de ${(setor2 / 2).toFixed()} unidades de sensor`;
+                divMensagemHigienizacao.innerHTML = `<b>Este setor precisará de ${(setor2 / 4).toFixed()} pares de sensor</b>`;
             }
             if (setor3 > 0){
-                divMensagemProcessamento.innerHTML = `Este setor precisará de ${(setor3 / 2).toFixed()} unidades de sensor`;
+                divMensagemProcessamento.innerHTML = `<b>Este setor precisará de ${(setor3 / 4).toFixed()} pares de sensor</b>`;
             }
             if (setor4 > 0){
-                divMensagemProcessamento.innerHTML = `Este setor precisará de ${(setor4 / 2).toFixed()} unidades de sensor`;
+                divMensagemEmbalagem.innerHTML = `<b>Este setor precisará de ${(setor4 / 4).toFixed()} pares de sensor</b>`;
             }
             if (setor5 > 0){
-                divMensagemEmbalagem.innerHTML = `Este setor precisará de ${(setor5 / 2).toFixed()} unidades de sensor`;
+                divMensagemArmazenamento.innerHTML = `<b>Este setor precisará de ${(setor5 / 4).toFixed()} pares de sensor</b>`;
             }
             if (setor6 > 0){
-                divMensagemArmazenamento.innerHTML = `Este setor precisará de ${(setor6 / 2).toFixed()} unidades de sensor`;
+                divMensagemDistribuicao.innerHTML = `<b>Este setor precisará de ${(setor6 / 4).toFixed()} pares de sensor</b>`;
             }
-            divMensagem2.innerHTML = `Com um total de ${totalMetros} metros de esteira, você irá precisar de aproximadamente ${totalSensor.toFixed()} pares de sensor, que custará aproximados R$${totalValorSensor}`
+            divMensagem2.innerHTML = `<b>Com um total de ${totalMetros} metros de esteira, você irá precisar de aproximadamente ${totalSensor.toFixed()} pares de sensor, que custará aproximados <span style="color: rgb(255, 0, 0);"> R$${totalValorSensor}</span>.</b>`
 
             // Mensagem final
             var valorEconomizado = totalPerda - totalValorSensor;
 
             if (desvio > 0 && tempo > 0){
-                divMensagemFinal.innerHTML = `Com o nosso serviço de custo R$${totalValorSensor}, o lucro mensal de sua empresa aumentaria em R$${valorEconomizado}, ou seja, ${( valorEconomizado / totalPerda * 100).toFixed(2)}% do que você perdia anteriormente`;
+                divMensagemFinal.innerHTML = `<b>Com o nosso serviço de custo R$${totalValorSensor}, a economia de sua empresa seria de  <span style="color: rgb(0, 255, 0);">R$${valorEconomizado.toFixed(2)}</span>, com o aumento de  <span style="color: rgb(0, 255, 0);">${(( valorEconomizado / totalPerda * 100)/4).toFixed(2)}% </span>semanal.</b>`;
             }else {
                 divMensagemFinal.innerHTML = `Valor não inserido, preencha todos os campos necessários`;
             }
